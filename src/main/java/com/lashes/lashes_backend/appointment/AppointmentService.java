@@ -1,6 +1,6 @@
 package com.lashes.lashes_backend.appointment;
 
-/*import com.lashes.lashes_backend.notification.EmailService;*/
+import com.lashes.lashes_backend.notification.EmailService;
 import com.lashes.lashes_backend.reprogramacion.Reprogramacion;
 import com.lashes.lashes_backend.reprogramacion.ReprogramacionRepository;
 import com.lashes.lashes_backend.servicio.Servicio;
@@ -24,7 +24,7 @@ public class AppointmentService {
     private final ServicioRepository servicioRepository;
     private final TimeSlotRepository timeSlotRepository;
     private final ReprogramacionRepository reprogramacionRepository;
-   // private final EmailService emailService;
+    private final EmailService emailService;
 
     public AppointmentResponse agendar(String emailCliente, AppointmentRequest request) {
         User cliente = userRepository.findByEmail(emailCliente)
@@ -53,8 +53,8 @@ public class AppointmentService {
         timeSlotRepository.save(slot);
         appointmentRepository.save(appointment);
 
-      /*   emailService.enviarCitaRecibida(cliente.getEmail(), cliente.getNombre(),
-                servicio.getNombre(), slot.getFechaHora());*/
+       emailService.enviarCitaRecibida(cliente.getEmail(), cliente.getNombre(),
+                servicio.getNombre(), slot.getFechaHora());
 
         return toResponse(appointment);
     }
@@ -65,11 +65,11 @@ public class AppointmentService {
         appointment.setActualizadoEn(LocalDateTime.now());
         appointmentRepository.save(appointment);
 
-      /*  emailService.enviarCitaConfirmada(
+       emailService.enviarCitaConfirmada(
                 appointment.getCliente().getEmail(),
                 appointment.getCliente().getNombre(),
                 appointment.getServicio().getNombre(),
-                appointment.getSlot().getFechaHora());*/
+                appointment.getSlot().getFechaHora());
 
         return toResponse(appointment);
     }
@@ -108,13 +108,13 @@ public class AppointmentService {
         appointment.setActualizadoEn(LocalDateTime.now());
         appointmentRepository.save(appointment);
 
-        /*emailService.enviarCitaReprogramada(
+        emailService.enviarCitaReprogramada(
                 appointment.getCliente().getEmail(),
                 appointment.getCliente().getNombre(),
                 appointment.getServicio().getNombre(),
                 slotAnterior.getFechaHora(),
                 nuevoSlot.getFechaHora(),
-                motivo);*/
+                motivo);
 
         rep.setNotificado(true);
         reprogramacionRepository.save(rep);
@@ -130,11 +130,11 @@ public class AppointmentService {
         appointment.setActualizadoEn(LocalDateTime.now());
         appointmentRepository.save(appointment);
 
-       /*emailService.enviarCitaCancelada(
+       emailService.enviarCitaCancelada(
                 appointment.getCliente().getEmail(),
                 appointment.getCliente().getNombre(),
                 appointment.getServicio().getNombre(),
-                appointment.getSlot().getFechaHora());*/
+                appointment.getSlot().getFechaHora());
 
         return toResponse(appointment);
     }
