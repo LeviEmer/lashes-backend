@@ -36,6 +36,28 @@ public class AuthService {
         return new AuthResponse(token, user.getNombre(), user.getEmail(), user.getRol().name());
     }
 
+    public AuthResponse registerAdmin(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("El correo ya está registrado");
+        }
+
+        Rol rolAsignado = (request.getRol() != null) ? request.getRol() : Rol.ADMIN_DEV;
+
+        User user = User.builder()
+                .nombre(request.getNombre())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .telefono(request.getTelefono())
+                .rol(rolAsignado)
+                .activo(true)
+                .build();
+
+        userRepository.save(user);
+
+        String token = jwtUtil.generateToken(user.getEmail(), user.getRol().name());
+        return new AuthResponse(token, user.getNombre(), user.getEmail(), user.getRol().name());
+    }
+
     public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Credenciales incorrectas"));
@@ -52,4 +74,3 @@ public class AuthService {
         return new AuthResponse(token, user.getNombre(), user.getEmail(), user.getRol().name());
     }
 }
-

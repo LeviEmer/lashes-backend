@@ -36,6 +36,11 @@ public class JwtFilter extends OncePerRequestFilter {
                 String email = jwtUtil.extractEmail(token);
                 String rol = jwtUtil.extractRol(token);
 
+                // LOG TEMPORAL — quitar después de depurar
+                System.out.println(">>> EMAIL: " + email);
+                System.out.println(">>> ROL EXTRAÍDO: " + rol);
+                System.out.println(">>> AUTHORITY: ROLE_" + rol);
+
                 var user = userRepository.findByEmail(email);
                 if (user.isPresent()) {
                     var auth = new UsernamePasswordAuthenticationToken(
@@ -50,4 +55,3 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 }
-

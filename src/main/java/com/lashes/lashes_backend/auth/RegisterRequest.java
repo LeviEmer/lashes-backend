@@ -1,5 +1,5 @@
 package com.lashes.lashes_backend.auth;
-
+import com.lashes.lashes_backend.user.Rol;
 import lombok.Data;
 
 @Data
@@ -8,4 +8,5 @@ public class RegisterRequest {
     private String email;
     private String password;
     private String telefono;
+    private Rol rol;
 }
