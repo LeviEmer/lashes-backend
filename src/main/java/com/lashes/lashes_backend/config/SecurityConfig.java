@@ -34,9 +34,8 @@ public class SecurityConfig {
                     "/api/auth/login",
                     "/api/auth/public/login"
                 ).permitAll()
-                .requestMatchers("/api/auth/register-admin").hasRole("ADMIN_DEV")
                 .requestMatchers("/api/auth/register-admin")
-    .hasAnyRole("ADMIN_DEV", "ADMIN_OPERATOR")
+                    .hasAnyRole("ADMIN_DEV", "ADMIN_OPERATOR") // ✅ una sola regla
                 .requestMatchers("/api/servicios/publico").permitAll()
                 .requestMatchers("/api/slots/disponibles").permitAll()
                 .anyRequest().authenticated()
