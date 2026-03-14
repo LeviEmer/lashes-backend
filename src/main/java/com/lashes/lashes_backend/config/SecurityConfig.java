@@ -30,7 +30,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/api/auth/register",
-                    "/api/auth/login"
+                    "/api/auth/public/register",
+                    "/api/auth/login",
+                    "/api/auth/public/login"
                 ).permitAll()
                 .requestMatchers("/api/auth/register-admin").hasRole("ADMIN_DEV")
                 .requestMatchers("/api/auth/register-admin")
@@ -49,7 +51,8 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(
             "http://localhost:5173",
-            "https://bethlashes.vercel.app"
+            "https://bethlashes.vercel.app",
+            "https://bethlashes-frontend.onrender.com"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
