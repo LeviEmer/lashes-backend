@@ -1,0 +1,27 @@
+Stack: Spring Boot 3.x + Spring Security + JWT + PostgreSQL 16 + JPA + Hibernate
+Build: Maven
+Java: 17+
+Deploy: Render.com como Web Service
+Base de datos: PostgreSQL en Render managed
+
+Estructura de paquetes:
+- controller → endpoints REST
+- service → lógica de negocio
+- repository → Spring Data JPA
+- model/entity → entidades JPA
+- dto → objetos de transferencia (nunca exponer entidades directamente)
+- security → configuración JWT y Spring Security
+- config → CORS y otras configuraciones
+
+Roles: ADMIN_DEV, ADMIN_OPERATOR, CLIENT
+Auth: JWT Bearer token en header Authorization
+CORS: configurado en SecurityConfig para permitir el frontend en Render
+
+Reglas:
+- Siempre usar DTOs para request y response
+- Validar con @Valid y anotaciones de Jakarta
+- Manejar excepciones con @ControllerAdvice
+- Los endpoints siguen el patrón /api/v1/...
+- ADMIN_DEV tiene acceso total
+- ADMIN_OPERATOR acceso limitado a su sede
+- CLIENT solo accede a sus propios recursos
